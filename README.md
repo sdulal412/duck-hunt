@@ -5,7 +5,7 @@
     </a>
 
   <br />
-  <h3 align="center"> Duck hunt </h3>
+  <h3 align="center">Duck hunt</h3>
 </div>
 
 ## <a name="table">Table of Contents</a>
