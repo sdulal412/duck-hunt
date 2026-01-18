@@ -1,0 +1,13 @@
+<div class="bottom-ui">
+  <div class="ammo-container">
+    <div *ngFor="let bullet of [].constructor(ammo$ | async)" class="bullet"></div>
+  </div>
+  
+  <div class="hit-indicators">
+    <div *ngFor="let d of [1,2,3,4,5,6,7,8,9,10]" class="hit-dot"></div>
+  </div>
+
+  <div class="score-box">
+    SCORE: {{ score$ | async | number:'6.0-0' }}
+  </div>
+</div>
