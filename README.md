@@ -47,8 +47,6 @@ duck-hunt/
 
 ## <a name="quick-start">Quick Start</a>
 
-
-1. Clone
 ```bash
 # Clone the Repository
 git clone https://github.com/sdulal412/duck-hunt.git

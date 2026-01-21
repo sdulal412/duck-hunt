@@ -1,56 +1,75 @@
 import { Injectable } from '@angular/core';
+import { Dog } from '../models/dog.model';
 import { Duck } from '../models/duck.model';
-import { DuckState } from '../models/constants';
+import { DuckState, DogState } from '../models/constants';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class EngineService {
+  updateDogLogic(dog: Dog, frameCount: number) {
+    switch (dog.state) {
+      case DogState.SNIFFING:
+        dog.y = 350;
+        dog.x += 1.5;
 
-  updateAnimation(duck: Duck, frameCount: number) {
-    if (frameCount % 5 === 0 && duck.state === DuckState.FLYING) {
-      duck.frame = (duck.frame + 1) % 3;
+        if (frameCount % 10 === 0) dog.frame = (dog.frame + 1) % 4;
+        if (dog.x >= 320) {
+          dog.state = DogState.FOUND;
+          dog.frame = 4;
+        }
+        break;
+
+      case DogState.FOUND:
+        if (frameCount % 15 === 0) dog.frame = dog.frame === 4 ? 5 : 4;
+        if (frameCount % 60 === 0) {
+          dog.state = DogState.JUMPING;
+          dog.vY = -12;
+          dog.frame = 7;
+        }
+        break;
+
+      case DogState.JUMPING:
+        dog.frame = 7;
+        dog.y += dog.vY;
+        dog.vY += 0.6;
+        dog.x += 1.2;
+        break;
     }
   }
 
-updateDuckPhysics(duck: Duck): Duck {
-  switch (duck.state) {
-    case DuckState.FLYING:
-      this.moveZigZag(duck);
-      break;
-    case DuckState.HIT:
-      break;
-    case DuckState.FALLING:
-      duck.y += 8;
-      break;
-    case DuckState.ESCAPED:
-      duck.y -= 8;
-      break;
-  }
-  return duck;
-}
+  updateDuckPhysics(duck: Duck): Duck {
+    switch (duck.state) {
+      case DuckState.FLYING:
+        duck.x += duck.vX;
+        duck.y += duck.vY;
 
-private moveZigZag(duck: Duck) {
-  duck.x += duck.vX;
-  duck.y += duck.vY;
-  const grassLine = 375;
+        if (duck.x <= 0 || duck.x >= 740) duck.vX *= -1;
+        if (duck.y <= 0 || duck.y >= 350) duck.vY *= -1;
+        break;
 
-  if (duck.x <= 0 || duck.x >= 800 - duck.width) {
-    duck.vX *= -1;
-  }
-  if (duck.y <= 0) {
-    duck.vY = Math.abs(duck.vY); 
-  }
-  if (duck.y < grassLine && (duck.y + duck.height) >= grassLine && duck.vY > 0) {
-    duck.vY *= -1;
-  }
-}
+      case DuckState.HIT:
+        duck.vX = 0;
+        duck.vY = 0;
+        break;
 
-  checkHit(mouseX: number, mouseY: number, duck: Duck): boolean {
+      case DuckState.FALLING:
+        duck.y += 8;
+        break;
+    }
+    return duck;
+  }
+
+  updateAnimation(duck: Duck, frameCount: number) {
+    if (frameCount % 6 === 0) {
+      duck.frame++;
+    }
+  }
+
+  checkHit(mx: number, my: number, duck: Duck): boolean {
     return (
-      mouseX >= duck.x && mouseX <= duck.x + duck.width &&
-      mouseY >= duck.y && mouseY <= duck.y + duck.height &&
-      duck.state === DuckState.FLYING
+      mx >= duck.x &&
+      mx <= duck.x + duck.width &&
+      my >= duck.y &&
+      my <= duck.y + duck.height
     );
   }
 }
