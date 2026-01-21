@@ -8,8 +8,8 @@ export const GAME_CONF = {
   COLORS: {
     SKY: '#64b0ff',
     GRASS: '#008000',
-    UI_PANEL: '#000000'
-  }
+    UI_PANEL: '#000000',
+  },
 };
 
 export enum GameStatus {
@@ -17,12 +17,21 @@ export enum GameStatus {
   PLAYING,
   DUCK_HIT,
   GAME_OVER,
-  DUCK_ESCAPE
+  DUCK_ESCAPE,
 }
 
 export enum DuckState {
   HIT,
   FLYING,
   FALLING,
-  ESCAPED
+  ESCAPED,
+}
+
+export enum DogState {
+  IDLE = 'IDLE',
+  FOUND = 'FOUND',
+  JUMPING = 'JUMPING',
+  LAUGHING = 'LAUGHING',
+  SNIFFING = 'SNIFFING',
+  CELEBRATING = 'CELEBRATING',
 }
