@@ -1,0 +1,99 @@
+.nes-intro-container {
+    display: flex;
+    z-index: 1000;
+    top: 0; left: 0;
+    overflow: hidden;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000;
+    width: 800px; height: 600px;
+    font-family: 'Press Start 2P', cursive;
+
+  .scanline-overlay {
+      z-index: 10;
+      top: 0; left: 0;
+      position: absolute;
+      pointer-events: none;
+      width: 100%; height: 100%;
+      background-size: 100% 4px;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+  }
+
+  .logo-area {
+      width: 700px;
+      display: flex;
+      margin-top: 60px;
+      flex-direction: column;
+      align-items: flex-start;
+
+    .logo-top, .logo-bottom {
+        margin: 0;
+        line-height: 1;
+        font-size: 120px;
+        color: #3beeff;
+        letter-spacing: -2px;
+        text-shadow: 4px 4px 0px #000;
+    }
+
+    .logo-bottom {
+      margin-left: 140px;
+    }
+
+    .separator-line {
+        width: 100%;
+        height: 6px;
+        margin: 10px 0;
+        background-color: #f9a158;
+    }
+  }
+
+  .action-area {
+    margin-top: 100px;
+    
+    .start-game-btn {
+        border: none;
+        display: flex;
+        font-size: 28px;
+        cursor: pointer;
+        color: #f9a158;
+        background: none;
+        align-items: center;
+        font-family: inherit;
+
+      .nes-pointer {
+          width: 0;
+          height: 0;
+          margin-right: 25px;
+          border-left: 20px solid #fff;
+          border-top: 14px solid transparent;
+          border-bottom: 14px solid transparent;
+      }
+
+      .blink-text {
+        animation: blink 0.8s steps(2, start) infinite;
+      }
+    }
+  }
+
+  .retro-footer {
+      bottom: 40px;
+      color: #fff;
+      text-align: center;
+      position: absolute;
+    
+    .dev-text {
+        font-size: 10px;
+        color: #8ceb00;
+        margin-bottom: 10px;
+    }
+
+    .copyright {
+      font-size: 18px;
+    }
+  }
+}
+
+@keyframes blink {
+  to { visibility: hidden; }
+}
