@@ -1,17 +1,76 @@
-.stage {
-  width: 100vw;
-  height: 100vh;
+.game-container {
   display: flex;
+  cursor: crosshair;
+  position: relative;
   align-items: center;
   justify-content: center;
-  background-color: #111;
 
   canvas {
-    width: 800px;
-    height: 600px;
-    cursor: crosshair;
-    border: 8px solid #333;
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 95vw;
+    max-height: 95vh;
+    aspect-ratio: 800 / 600;
+    border: 4px solid #000;
     image-rendering: pixelated;
-    background-color: #64b0ff;
+    box-shadow: 12px 12px 0px #000, 24px 24px 0px #111;
+  }
+
+  .reload-overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    pointer-events: auto;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .menu-box {
+    padding: 30px;
+    min-width: 300px;
+    text-align: center;
+    background: black;
+    border: 4px solid white;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 16px 16px 0px rgba(0, 0, 0, 0.8);
+
+    h2 {
+      color: white;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .reload-btn {
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 15px 30px;
+      background: #ffcc00;
+      transition: transform 0.1s;
+      box-shadow: 4px 4px 0px #997a00;
+      font-family: 'Press Start 2P', cursive;
+
+      &:hover {
+        background: #ffe066;
+        transform: scale(1.05);
+      }
+      
+      &:active {
+        transform: scale(0.95);
+        box-shadow: 0px 0px 0px transparent;
+      }
+    }
+
+    .cost-text {
+      color: white;
+      font-size: 10px;
+      margin-top: 15px;
+    }
   }
 }

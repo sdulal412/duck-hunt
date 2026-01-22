@@ -32,11 +32,12 @@ duck-hunt/
 │   │   │   └── audio.service.ts
 │   │   ├── components/
 │   │   │   ├── game-board/
-│   │   │   ├── scoreboard/
+│   │   │   ├── scoreboard/ /*to-do*/
 │   │   │   └── intro-screen/
 │   │   ├── models/
-│   │   │   ├── duck.model.ts
-│   │   │   └── constants.ts
+│   │   │   ├── constant.ts
+│   │   │   ├── dog.model.ts
+│   │   │   └── duck.model.ts
 │   └── assets/
 │       ├── sprites/
 │       └── sfx/
