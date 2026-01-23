@@ -14,10 +14,10 @@ const PHYSICS = {
     POPUP_TARGET_Y: 265,
   },
   DUCK: {
-    LERP: 0.05,
-    FALL_SPEED: 8,
-    BOUNDS_X: 730,
+    LERP: 0.001,
     BOUNDS_Y: 350,
+    BOUNDS_X: 730,
+    FALL_SPEED: 8,
     RANDOM_TURN_CHANCE: 0.6,
     DIRECTION_CHANGE_RATE: 45,
   },
