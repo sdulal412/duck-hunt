@@ -25,25 +25,32 @@ This project is a recreation of the 1984 NES classic. It utilizes Angular for co
 ```bash
 duck-hunt/
 ├── src/
+│   ├── main.ts
+│   ├── index.html
+│   ├── styles.scss
+│   ├── favicon.ico
 │   ├── app/
+│   │   ├── app.config.ts
+│   │   ├── app.component.ts
+│   │   ├── app.component.scss
+│   │   ├── app.component.html
 │   │   ├── core/
-│   │   │   ├── engine.service.ts
+│   │   │   ├── audio.service.ts
 │   │   │   ├── state.service.ts
-│   │   │   └── audio.service.ts
+│   │   │   └── engine.service.ts
 │   │   ├── components/
 │   │   │   ├── game-board/
-│   │   │   ├── scoreboard/ /*to-do*/
+│   │   │   ├── scoreboard/
 │   │   │   └── intro-screen/
 │   │   ├── models/
 │   │   │   ├── constant.ts
 │   │   │   ├── dog.model.ts
 │   │   │   └── duck.model.ts
 │   └── assets/
-│       ├── sprites/
-│       └── sfx/
+│       ├── sfx/
+│       └── sprites/
 ├── angular.json
 └── package.json
-
 ```
 
 ## <a name="quick-start">Quick Start</a>
@@ -59,6 +66,6 @@ npm install
 # Runs the local on http://localhost:4200
 ng serve
 
-# Build the project
+# Build the project (uoutput path: dist/duck-hunt)
 ng build
 ```

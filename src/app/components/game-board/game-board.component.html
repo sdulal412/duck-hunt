@@ -1,15 +1,29 @@
 <div class="game-container">
-  <app-intro-screen *ngIf="status === 'MENU'" (startGame)="onIntroStart()">
-  </app-intro-screen>
+  <div class="ui-scaler" [style.transform]="'scale(' + scaleFactor + ')'">
+    
+    <app-intro-screen
+      (startGame)="onIntroStart()"
+      *ngIf="status === GameStatus.MENU"
+    >
+    </app-intro-screen>
 
-  <canvas width="800" height="600" #gameCanvas (click)="handleShoot($event)">
-  </canvas>
+    <app-scoreboard
+      [hitHistory]="hitHistory"
+      [ammo]="state.currentAmmo"
+      [round]="state.roundNumber"
+      [score]="state.currentScore"
+      *ngIf="status !== GameStatus.MENU"
+    >
+    </app-scoreboard>
 
-  <div *ngIf="showReloadUI" class="reload-overlay">
-    <div class="menu-box">
-      <h2>OUT OF AMMO!</h2>
-      <button class="reload-btn" (click)="onReloadClick($event)">RELOAD</button>
-      <p class="cost-text">COST: 500 PTS</p>
+    <div *ngIf="showReloadUI" class="reload-overlay">
+      <div class="menu-box">
+        <h2>OUT OF AMMO!</h2>
+        <button class="reload-btn" (click)="onReloadClick($event)">RELOAD</button>
+        <p class="cost-text">COST: 500 PTS</p>
+      </div>
     </div>
   </div>
+
+  <canvas #gameCanvas width="800" height="600" (click)="handleShoot($event)"></canvas>
 </div>

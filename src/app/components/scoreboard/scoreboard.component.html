@@ -1,0 +1,18 @@
+<div class="hud-overlay">
+  <div class="round-val">{{ round }}</div>
+
+  <div class="ammo-row">
+    <div *ngFor="let slot of [2, 1, 0]" 
+         class="ammo-cover" 
+         [class.is-spent]="slot >= ammo">
+    </div>
+  </div>
+
+  <div class="hit-row">
+    <div *ngFor="let hit of hitHistory" class="hit-slot">
+      <div *ngIf="hit === true" class="red-x">X</div>
+    </div>
+  </div>
+
+  <div class="score-val">{{ score.toString().padStart(6, '0') }}</div>
+</div>
