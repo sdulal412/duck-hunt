@@ -66,6 +66,6 @@ npm install
 # Runs the local on http://localhost:4200
 ng serve
 
-# Build the project (uoutput path: dist/duck-hunt)
+# Build the project (output path: dist/duck-hunt)
 ng build
 ```
