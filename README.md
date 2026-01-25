@@ -17,7 +17,7 @@
 
 ## <a name="introduction">Introduction</a>
 
-This project is a recreation of the 1984 NES classic. It utilizes Angular for component orchestration and HTML5 Canvas for high-performance rendering, ensuring a smooth 60FPS experience.
+This project is a recreation of the 1984 classic Duck Hunt (NES). It utilizes Angular for component orchestration and HTML5 Canvas for high-performance rendering, ensuring a smooth 60FPS experience.
 
 
 ## <a name="project-structure">Project Structure</a>
