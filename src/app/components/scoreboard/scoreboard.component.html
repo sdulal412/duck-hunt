@@ -2,10 +2,11 @@
   <div class="round-val">{{ round }}</div>
 
   <div class="ammo-row">
-    <div *ngFor="let slot of [2, 1, 0]" 
-         class="ammo-cover" 
-         [class.is-spent]="slot >= ammo">
-    </div>
+    <div
+      *ngFor="let slot of [2, 1, 0]"
+      class="ammo-cover"
+      [class.is-spent]="slot >= ammo"
+    ></div>
   </div>
 
   <div class="hit-row">
@@ -14,5 +15,5 @@
     </div>
   </div>
 
-  <div class="score-val">{{ score.toString().padStart(6, '0') }}</div>
+  <div class="score-val">{{ score.toString().padStart(6, "0") }}</div>
 </div>

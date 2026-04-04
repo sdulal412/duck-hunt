@@ -6,7 +6,7 @@ export interface Duck {
   frame: number;
   height: number;
   state: DuckState;
-  
+
   y: number;
   x: number;
   vY: number;

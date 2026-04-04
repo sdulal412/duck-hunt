@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-
 export class AudioService {
-
   private buffers = new Map<string, AudioBuffer>();
   private audioContext: AudioContext = new AudioContext();
 
   private readonly SOUND_ASSETS = [
     { name: 'shot', url: 'assets/sfx/gunshot.wav' },
     { name: 'hit', url: 'assets/sfx/duck-hit.wav' },
-    { name: 'fall', url: 'assets/sfx/duck-falling.wav' }
+    { name: 'fall', url: 'assets/sfx/duck-falling.wav' },
   ];
 
   constructor() {
@@ -22,7 +20,8 @@ export class AudioService {
       try {
         const response = await fetch(sound.url);
         const arrayBuffer = await response.arrayBuffer();
-        const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+        const audioBuffer =
+          await this.audioContext.decodeAudioData(arrayBuffer);
         this.buffers.set(sound.name, audioBuffer);
       } catch {}
     });
@@ -35,7 +34,7 @@ export class AudioService {
     }
   }
 
-  public play(name: string, volume: number = 0.1): void {
+  public play(name: string, volume: number = 0.005): void {
     const buffer = this.buffers.get(name);
     if (!buffer) return;
 
