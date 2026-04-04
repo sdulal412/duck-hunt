@@ -5,7 +5,7 @@
     </a>
 
   <br />
-  <h3 align="center">Duck hunt</h3>
+  <h3 align="center">https://duck-hunt.sdulal.dev</h3>
 </div>
 
 ## <a name="table">Table of Contents</a>
@@ -14,11 +14,9 @@
 2. [Project Structure](#project-structure)
 3. [Quick Start](#quick-start)
 
-
 ## <a name="introduction">Introduction</a>
 
 This project is a recreation of the 1984 classic Duck Hunt (NES). It utilizes Angular for component orchestration and HTML5 Canvas for high-performance rendering, ensuring a smooth 60FPS experience.
-
 
 ## <a name="project-structure">Project Structure</a>
 

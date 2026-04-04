@@ -14,44 +14,41 @@ const PHYSICS = {
     POPUP_TARGET_Y: 265,
   },
   DUCK: {
-    LERP: 0.001,
-    BOUNDS_Y: 350,
-    BOUNDS_X: 730,
     FALL_SPEED: 8,
-    RANDOM_TURN_CHANCE: 0.6,
-    DIRECTION_CHANGE_RATE: 45,
+    BOUNDS_Y: 340,
+    BOUNDS_X: 730,
+    BASE_LERP: 0.06,
+    ESCAPE_SPEED: -3,
+    BASE_MAX_SPEED: 4.5,
+    BASE_CHANGE_RATE: 40,
+    BASE_TURN_CHANCE: 0.5,
   },
   ANIMATION: { DUCK: 6, DOG_WALK: 10, DOG_ALERT: 15 },
 };
 
-@Injectable 
-({ providedIn: 'root' })
-
+@Injectable({ providedIn: 'root' })
 export class EngineService {
-  
   updateDogLogic(dog: Dog, frameCount: number): void {
     switch (dog.state) {
       case DogState.SNIFFING:
-        this.handleDogSniffing(dog, frameCount); 
+        this.handleDogSniffing(dog, frameCount);
         break;
-
-      case DogState.FOUND:       
-        this.handleDogFound(dog, frameCount); 
+      case DogState.FOUND:
+        this.handleDogFound(dog, frameCount);
         break;
-
-      case DogState.JUMPING:     
-        this.handleDogJumping(dog); 
+      case DogState.JUMPING:
+        this.handleDogJumping(dog);
         break;
-
       case DogState.CELEBRATING:
-      case DogState.LAUGHING:    
-        this.handleDogPopup(dog, frameCount); 
+      case DogState.LAUGHING:
+        this.handleDogPopup(dog, frameCount);
         break;
     }
   }
 
-  updateDuckPhysics(duck: Duck, frameCount: number): Duck {
-    const { FALL_SPEED } = PHYSICS.DUCK;
+  updateDuckPhysics(duck: Duck, frameCount: number, round: number = 1): Duck {
+    const factor = 1 + (round - 1) * 0.25;
+    const { FALL_SPEED, ESCAPE_SPEED, BOUNDS_Y } = PHYSICS.DUCK;
 
     switch (duck.state) {
       case DuckState.FALLING:
@@ -59,14 +56,24 @@ export class EngineService {
         break;
 
       case DuckState.FLY_AWAY:
+        duck.targetY = ESCAPE_SPEED * factor;
+        this.applyDuckSteering(duck, factor);
         duck.x += duck.vX;
         duck.y += duck.vY;
         break;
 
       case DuckState.FLYING:
-        this.applySteering(duck);
-        this.applyRandomMovement(duck, frameCount);
-        this.constrainToBounds(duck);
+        if (duck.vX === 0 && duck.vY === 0) {
+          duck.y = BOUNDS_Y - 15;
+          duck.vY = -5 * factor;
+          duck.targetY = -6 * factor;
+          duck.targetX = (Math.random() - 0.5) * 8;
+        }
+
+        this.applyDuckSteering(duck, factor);
+        this.applyDuckRandomMovement(duck, frameCount, factor);
+        this.constrainDuckBounds(duck, factor);
+
         duck.x += duck.vX;
         duck.y += duck.vY;
         break;
@@ -77,11 +84,9 @@ export class EngineService {
   private handleDogSniffing(dog: Dog, frameCount: number): void {
     dog.y = PHYSICS.DOG.GROUND_Y;
     dog.x += PHYSICS.DOG.WALK_SPEED;
-
     if (frameCount % PHYSICS.ANIMATION.DOG_WALK === 0) {
       dog.frame = (dog.frame + 1) % 4;
     }
-
     if (dog.x >= 320) {
       dog.state = DogState.FOUND;
       dog.frame = 4;
@@ -92,7 +97,6 @@ export class EngineService {
     if (frameCount % PHYSICS.ANIMATION.DOG_ALERT === 0) {
       dog.frame = dog.frame === 4 ? 5 : 4;
     }
-
     if (frameCount % 60 === 0) {
       dog.state = DogState.JUMPING;
       dog.vY = PHYSICS.DOG.JUMP_POWER;
@@ -107,11 +111,8 @@ export class EngineService {
   }
 
   private handleDogPopup(dog: Dog, frameCount: number): void {
-
-    dog.frame = dog.state === DogState.CELEBRATING 
-      ? 9 
-      : (frameCount % 20 < 10 ? 10 : 11);
-
+    dog.frame =
+      dog.state === DogState.CELEBRATING ? 9 : frameCount % 20 < 10 ? 10 : 11;
     dog.y += dog.vY;
 
     if (dog.vY < 0 && dog.y <= PHYSICS.DOG.POPUP_TARGET_Y) {
@@ -119,42 +120,55 @@ export class EngineService {
       dog.y = PHYSICS.DOG.POPUP_TARGET_Y;
       setTimeout(() => (dog.vY = 3), 2000);
     }
-
     if (dog.vY > 0 && dog.y > PHYSICS.DOG.POPUP_LIMIT_Y) {
       dog.state = DogState.HIDDEN;
       dog.vY = 0;
     }
   }
 
-  private applySteering(duck: Duck): void {
-    const { LERP } = PHYSICS.DUCK;
-    duck.vX += (duck.targetX - duck.vX) * LERP;
-    duck.vY += (duck.targetY - duck.vY) * LERP;
+  private applyDuckSteering(duck: Duck, factor: number): void {
+    const { BASE_LERP, BASE_MAX_SPEED } = PHYSICS.DUCK;
+    const lerp = Math.min(BASE_LERP * factor, 0.3);
+    const maxSpeed = BASE_MAX_SPEED * factor;
+
+    duck.vX += (duck.targetX - duck.vX) * lerp;
+    duck.vY += (duck.targetY - duck.vY) * lerp;
+
+    duck.vX = Math.max(Math.min(duck.vX, maxSpeed), -maxSpeed);
+    duck.vY = Math.max(Math.min(duck.vY, maxSpeed), -maxSpeed);
   }
 
-  private applyRandomMovement(duck: Duck, frameCount: number): void {
-    const { DIRECTION_CHANGE_RATE, RANDOM_TURN_CHANCE } = PHYSICS.DUCK;
-    if (frameCount % DIRECTION_CHANGE_RATE === 0 && Math.random() > RANDOM_TURN_CHANCE) {
+  private applyDuckRandomMovement(
+    duck: Duck,
+    frameCount: number,
+    factor: number,
+  ): void {
+    const { BASE_CHANGE_RATE, BASE_TURN_CHANCE } = PHYSICS.DUCK;
+    const rate = Math.max(Math.floor(BASE_CHANGE_RATE / factor), 12);
 
-      duck.targetX = (Math.random() - 0.5) * 6;
-      duck.targetY = (Math.random() - 0.5) * 6;
+    if (frameCount % rate === 0 && Math.random() > BASE_TURN_CHANCE / factor) {
+      duck.targetX = (Math.random() - 0.5) * (12 * factor);
+      duck.targetY = (Math.random() - 0.5) * (10 * factor);
     }
   }
 
-  private constrainToBounds(duck: Duck): void {
+  private constrainDuckBounds(duck: Duck, factor: number): void {
+    if (duck.state === DuckState.FLY_AWAY) return;
     const { BOUNDS_X, BOUNDS_Y } = PHYSICS.DUCK;
 
     if (duck.x > BOUNDS_X || duck.x < 0) {
-      duck.vX *= -1;
       duck.targetX *= -1;
       duck.x = duck.x < 0 ? 1 : BOUNDS_X - 1;
     }
 
-    if (duck.y < 0 || duck.y > BOUNDS_Y) {
-      duck.vY *= -1;
-      duck.targetY *= -1;
-      duck.y = duck.y < 0 ? 1 : BOUNDS_Y - 1;
-      duck.targetX = (Math.random() - 0.5) * 4;
+    if (duck.y > BOUNDS_Y) {
+      duck.y = BOUNDS_Y - 2;
+      duck.vY = -2 * factor;
+      duck.targetY = -4 * factor;
+    } else if (duck.y < 0) {
+      duck.y = 2;
+      duck.vY = 2 * factor;
+      duck.targetY = 4 * factor;
     }
   }
 

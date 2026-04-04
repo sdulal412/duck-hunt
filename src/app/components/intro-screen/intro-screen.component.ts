@@ -8,9 +8,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './intro-screen.component.html',
   styleUrls: ['./intro-screen.component.scss'],
 })
-
 export class IntroScreenComponent {
-
   @Output() startGame = new EventEmitter<void>();
 
   onStart() {

@@ -1,66 +1,72 @@
 .hud-overlay {
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 800px;
-    height: 600px;
-    color: white;
-    position: absolute;
-    pointer-events: none;
-    container-type: size;
-    font-family: 'Press Start 2P', cursive;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 800px;
+  height: 600px;
+  color: white;
+  position: absolute;
+  pointer-events: none;
+  container-type: size;
+  font-family: "Press Start 2P", cursive;
 
   .round-val {
-      font-size: 2.2cqw;
-      color: #CE728A;
-      position: absolute;
-      font-weight: bolder;
-      position: absolute; left: 142px; top: 477px;
+    top: 477px;
+    left: 142px;
+    color: #ce728a;
+    font-size: 2.2cqw;
+    position: absolute;
+    position: absolute;
+    font-weight: bolder;
   }
 
   .ammo-row {
-      gap: 10px;
-      display: flex;
-      flex-direction: row-reverse;
-      position: absolute; left: 80px; top: 515px;
+    gap: 10px;
+    left: 80px;
+    top: 515px;
+    display: flex;
+    position: absolute;
+    flex-direction: row-reverse;
 
     .ammo-cover {
-        width: 16px;
-        height: 22px;
-        background: transparent;
+      width: 16px;
+      height: 22px;
+      background: transparent;
 
-        &.is-spent {
-          background: black;
+      &.is-spent {
+        background: black;
       }
     }
   }
 
   .hit-row {
-      gap: 5px;
-      display: flex;
-      position: absolute; left: 300px; top: 520px;
+    gap: 5px;
+    top: 520px;
+    left: 300px;
+    display: flex;
+    position: absolute;
 
     .hit-slot {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .red-x {
-          color: red;
-          font-size: 20px;
-          font-weight: bolder;
-          text-shadow: 1px 1px 0px #000;
+        color: red;
+        font-size: 20px;
+        font-weight: bolder;
+        text-shadow: 1px 1px 0px #000;
       }
     }
   }
 
   .score-val {
-      top: 512px;
-      right: 75px;
-      font-size: 20px;
-      text-align: right;
-      position: absolute;
+    top: 512px;
+    right: 75px;
+    font-size: 20px;
+    text-align: right;
+    position: absolute;
   }
 }

@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { GameStatus, GAME_CONF } from '../models/constants';
 
 @Injectable({ providedIn: 'root' })
-
 export class StateService {
-  
   private readonly HIGH_SCORE_KEY = 'duckHunt_highScore';
 
   private _round = new BehaviorSubject<number>(1);
@@ -24,13 +22,25 @@ export class StateService {
   highScore$ = this._highScore.asObservable();
   ducksProcessed$ = this._ducksProcessed.asObservable();
 
-  get currentAmmo() { return this._ammo.value; }
-  get roundNumber() { return this._round.value; }
-  get currentScore() { return this._score.value; }
-  get ducksHitInRound() { return this._ducksHit.value; }
-  get currentHighScore() { return this._highScore.value; }
-  get ducksProcessed() { return this._ducksProcessed.value; }
-  
+  get currentAmmo() {
+    return this._ammo.value;
+  }
+  get roundNumber() {
+    return this._round.value;
+  }
+  get currentScore() {
+    return this._score.value;
+  }
+  get ducksHitInRound() {
+    return this._ducksHit.value;
+  }
+  get currentHighScore() {
+    return this._highScore.value;
+  }
+  get ducksProcessed() {
+    return this._ducksProcessed.value;
+  }
+
   setGameStatus(status: GameStatus) {
     this._status.next(status);
   }
@@ -43,7 +53,7 @@ export class StateService {
     const newScore = this._score.value + points;
     this._score.next(newScore);
     this._ducksHit.next(this._ducksHit.value + 1);
-    
+
     if (newScore > this._highScore.value) {
       this.saveHighScore(newScore);
     }

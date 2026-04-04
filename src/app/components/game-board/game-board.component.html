@@ -1,6 +1,5 @@
 <div class="game-container">
   <div class="ui-scaler" [style.transform]="'scale(' + scaleFactor + ')'">
-    
     <app-intro-screen
       (startGame)="onIntroStart()"
       *ngIf="status === GameStatus.MENU"
@@ -18,12 +17,21 @@
 
     <div *ngIf="showReloadUI" class="reload-overlay">
       <div class="menu-box">
-        <h2>OUT OF AMMO!</h2>
-        <button class="reload-btn" (click)="onReloadClick($event)">RELOAD</button>
+        <h2 class="blink-text">OUT OF AMMO!</h2>
+        <div class="separator-line"></div>
+        <button class="reload-btn" (click)="onReloadClick($event)">
+          <span class="nes-pointer"></span>
+          RELOAD
+        </button>
         <p class="cost-text">COST: 500 PTS</p>
       </div>
     </div>
   </div>
 
-  <canvas #gameCanvas width="800" height="600" (click)="handleShoot($event)"></canvas>
+  <canvas
+    #gameCanvas
+    width="800"
+    height="600"
+    (click)="handleShoot($event)"
+  ></canvas>
 </div>

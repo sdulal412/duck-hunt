@@ -1,85 +1,113 @@
 .game-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   cursor: crosshair;
-  border: #03f7ff;
   position: relative;
+  background: #000;
   align-items: center;
-  aspect-ratio: 4 / 3;
   justify-content: center;
 
   canvas {
-    width: auto;
-    height: auto;
     display: block;
     max-width: 95vw;
     max-height: 95vh;
     aspect-ratio: 800 / 600;
     image-rendering: pixelated;
     border: 4px solid #da6e6e;
-    box-shadow: 12px 12px 0px #444242, 24px 24px 0px #635151;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .ui-scaler {
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    margin-top: -300px;
+    margin-left: -400px;
+    pointer-events: none;
+    transform-origin: center;
+
+    .reload-overlay,
+    app-intro-screen {
+      pointer-events: auto;
+    }
   }
 
   .reload-overlay {
     top: 0;
     left: 0;
-    z-index: 100;
-    width: 800px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
     display: flex;
+    z-index: 1100;
     position: absolute;
     align-items: center;
-    pointer-events: auto;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
   }
 
-.menu-box {
-  padding: 40px;
-  text-align: center;
-  background: #000;
-  border: 4px solid #fff;
-  font-family: 'Press Start 2P', cursive;
-  box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+  .menu-box {
+    padding: 40px;
+    text-align: center;
+    background: #000;
+    border: 6px solid #f9a158;
+    font-family: "Press Start 2P", cursive;
 
     h2 {
-      color: #fff;
-      font-size: 18px;
+      font-size: 24px;
+      color: #3beeff;
+      margin-bottom: 20px;
+    }
+
+    .separator-line {
+      width: 100%;
+      height: 4px;
       margin-bottom: 30px;
+      background: #f9a158;
     }
 
     .reload-btn {
       border: none;
-      color: #000;
-      font-size: 14px;
+      display: flex;
+      margin: 0 auto;
+      font-size: 20px;
       cursor: pointer;
-      padding: 15px 30px;
+      background: none;
+      color: #f9a158;
+      align-items: center;
       font-family: inherit;
-      background: #ffcc00;
-      box-shadow: 4px 4px 0px #997a00;
 
-      &:hover { background: #ffe066; }
-      &:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #997a00; }
+      .nes-pointer {
+        width: 0;
+        height: 0;
+        margin-right: 15px;
+        border-left: 15px solid #fff;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+      }
+
+      &:hover {
+        color: #fff;
+      }
     }
 
     .cost-text {
-      color: #fff;
-      font-size: 10px;
-      margin-top: 20px;
+      font-size: 12px;
+      color: #8ceb00;
+      margin-top: 25px;
     }
   }
-  
-  .ui-scaler {
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 800px;
-    height: 600px;
-    position: absolute;
-    pointer-events: none;
-    transform-origin: top left;
-      
-      .reload-overlay, app-intro-screen {
-        pointer-events: auto;
-      }
+}
+
+.blink-text {
+  animation: blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
   }
 }
