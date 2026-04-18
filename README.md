@@ -5,7 +5,7 @@
     </a>
 
   <br />
-  <h3 align="center">https://duck-hunt.sdulal.dev</h3>
+  <h3 align="center">https://hunt.sushil.io</h3>
 </div>
 
 ## <a name="table">Table of Contents</a>
